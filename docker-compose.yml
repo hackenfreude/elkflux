@@ -1,0 +1,21 @@
+version: '2'
+services:
+        logstash:
+                image: logstash:2.3.4-1
+                depends_on:
+                        - elasticsearch
+                ports:
+                        - "9000:8080"
+                volumes:
+                        - ./logstash/logstash.conf:/etc/logstash/conf.d/logstash.conf:ro
+                command: logstash -f /etc/logstash/conf.d/logstash.conf
+        elasticsearch:
+                image: elasticsearch:2.3.5
+                ports:
+                        - "9200:9200"
+        kibana:
+                image: kibana:4.5.4
+                depends_on:
+                        - elasticsearch
+                ports:
+                        - "5601:5601"
