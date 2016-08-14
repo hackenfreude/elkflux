@@ -2,18 +2,19 @@
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
-            [ring.middleware.logger :as logger])
+            [ring.middleware.logger :as logger]
+            [onelog.core :as log])
   (:use
     clj-logging-config.log4j
     clojure.tools.logging))
 
-(defn handle-get []
+(defn handle-get [item]
   {:status 200
    :headers {"Content-Type" "text/html"}
-   :body "<h1>Hello World</h1>"})
+   :body (str "<h1>We have " item "</h1>")})
 
 (defroutes app-routes
-  (GET "/" [] (handle-get))
+  (GET "/:item" [item] (handle-get item))
   (route/not-found "Not Found"))
 
 (def init
@@ -22,7 +23,7 @@
     (set-logger!
       "onelog.core"
       :level :info
-      :out (org.apache.log4j.FileAppender. (org.apache.log4j.PatternLayout. "%d %m %n") "/var/log/clojure-frontend/web.log" true))))
+      :out (org.apache.log4j.FileAppender. (org.apache.log4j.PatternLayout. "%d %x %m %n") "/var/log/clojure-frontend/web.log" true))))
 
 (def app
   (->
