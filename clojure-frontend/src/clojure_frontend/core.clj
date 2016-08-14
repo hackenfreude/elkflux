@@ -9,9 +9,11 @@
     clojure.tools.logging))
 
 (defn handle-get [item]
-  {:status 200
-   :headers {"Content-Type" "text/html"}
-   :body (str "<h1>We have " item "</h1>")})
+  (do
+    (Thread/sleep (* 1000 (rand-int 5)))
+    {:status 200
+     :headers {"Content-Type" "text/html"}
+     :body (str "<h1>We have " item "</h1>")}))
 
 (defroutes app-routes
   (GET "/:item" [item] (handle-get item))

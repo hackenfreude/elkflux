@@ -4,6 +4,7 @@
                  [ring/ring-defaults "0.2.1"]
                  [ring.middleware.logger "0.5.0"]
                  [clj-logging-config "1.9.12"]
-                 [onelog "0.4.5"]]
+                 [onelog "0.4.5"]
+                 [clj-time "0.10.0"]]
   :plugins [[lein-ring "0.9.7"]]
   :ring {:handler clojure-frontend.core/app})
