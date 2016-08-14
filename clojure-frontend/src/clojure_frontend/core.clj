@@ -1,6 +1,11 @@
-(ns clojure-frontend.core)
+(ns clojure-frontend.core
+  (:require [compojure.core :refer :all]
+            [compojure.route :as route]
+            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defroutes app-routes
+  (GET "/" [] "Hello World")
+  (route/not-found "Not Found"))
+
+(def app
+  (wrap-defaults app-routes site-defaults))
