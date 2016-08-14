@@ -18,10 +18,11 @@
 
 (def init
   (do
-    (set-loggers!
-      :root {:out :console :level :error}
-      "onelog.core" {:out :console :level :info})
-    (info "logging initialized")))
+;    (set-config-logging-level! :debug)
+    (set-logger!
+      "onelog.core"
+      :level :info
+      :out (org.apache.log4j.FileAppender. (org.apache.log4j.PatternLayout. "%d %m %n") "/var/log/clojure-frontend/web.log" true))))
 
 (def app
   (->
