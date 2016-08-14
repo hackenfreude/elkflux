@@ -1,0 +1,8 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+        - /var/log/clojure-frontend/*.log
+output:
+  logstash:
+    hosts: ["logstash:5044"]

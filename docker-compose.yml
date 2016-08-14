@@ -6,6 +6,8 @@ services:
                         - elasticsearch
                 ports:
                         - "9000:8080"
+                expose:
+                        - "5044"
                 volumes:
                         - ./logstash/logstash.conf:/etc/logstash/conf.d/logstash.conf:ro
                 command: logstash -f /etc/logstash/conf.d/logstash.conf
@@ -23,3 +25,14 @@ services:
                 build: ./clojure-frontend
                 ports:
                         - "3000:3000"
+                volumes:
+                        - /var/log/clojure-frontend
+        filebeat:
+                image: prima/filebeat:1.2.3
+                depends_on:
+                        - logstash
+                        - frontend
+                volumes_from:
+                        - frontend:ro
+                volumes:
+                        - ./filebeat/filebeat.yml:/filebeat.yml:ro
